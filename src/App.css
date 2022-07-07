@@ -12,33 +12,45 @@
   overflow: hidden;
 }
 
-.products-grid-img-container img{
+.products-grid-img-container img {
   width: 100%;
 }
 
-.homepage-banner-container{
+.homepage-banner-container {
   height: 300px;
   overflow: hidden;
 }
 
-.homepage-banner-container>img{
+.homepage-banner-container>img {
   width: 100%;
   object-fit: cover;
 }
 
-.Footer{
+.Footer {
   width: 100%;
-  position: -webkit-sticky;
+  position: absolute;
   bottom: 0;
+  top: auto;
 }
 
-.grid-movie-card:hover{
+.grid-movie-card:hover {
   cursor: pointer;
   transform: scale(1.01);
   transition: 0.5s;
 }
 
-.grid-movie-img{
+.grid-movie-img {
   height: 350px;
   object-fit: cover;
+}
+
+.movie-details-image {
+  object-fit: cover;
+  width: 100%;
+}
+
+.auth-form-container{
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 30px;
 }
