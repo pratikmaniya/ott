@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useAlert } from "react-alert";
-import { Container, Badge, Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 
 function Dashboard() {
     const alert = useAlert(),
