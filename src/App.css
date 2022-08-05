@@ -1,9 +1,14 @@
+html, body, #root, .App {
+  min-height: 100%;
+  height: 100%;
+}
+
 .App {
   text-align: center;
 }
 
 .body-container {
-  margin-top: 70px;
+  padding-top: 70px;
 }
 
 .products-grid-img-container {
@@ -28,9 +33,8 @@
 
 .Footer {
   width: 100%;
-  position: absolute;
+  position: static;
   bottom: 0;
-  top: auto;
 }
 
 .grid-movie-card:hover {
@@ -47,10 +51,11 @@
 .movie-details-image {
   object-fit: cover;
   width: 100%;
+  max-height: 600px;
 }
 
-.auth-form-container{
+.auth-form-container {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 20px auto 213px;
   padding: 30px;
 }

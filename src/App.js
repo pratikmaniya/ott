@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 import movieContext from "./context/movieContext";
 import Header from './Layout/Header'
@@ -9,42 +11,44 @@ import Listing from './Pages/Listing';
 import MovieDetails from './Pages/MovieDetails';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import Dashboard from './Pages/Dashboard';
 
 import './App.css';
 
 function App() {
-    const [movies, setMovies] = useState([]);
-
-    useEffect(() => {
-        fetch("http://localhost:5000/movies")
-            .then((res) => {
-                return res.json()
-            })
-            .then(json => {
-                setMovies(json);
-            })
-            .catch((err) => {
-                console.log(`Error ${err}`);
-            })
+    const [isLoggedIn, setIsLoggedIn] = useState(false),
+        [userId, setUserId] = useState(""),
+        options = {
+            timeout: 5000,
+            position: positions.TOP_RIGHT
+        }
+    useEffect(_ => {
+        if (sessionStorage.getItem('id')) {
+            setUserId(sessionStorage.getItem('id'))
+            setIsLoggedIn(true)
+        }
     }, [])
     return (
-        <movieContext.Provider value={{ movies, setMovies }}>
-            <Router>
-                <div className="App">
-                    <Header />
-                    <div className='body-container'>
-                        <Routes>
-                            <Route path={process.env.PUBLIC_URL + "/"} exact element={<Home />} />
-                            <Route path={process.env.PUBLIC_URL + "/listing"} exact element={<Listing />} />
-                            <Route path={process.env.PUBLIC_URL + "/movie-details/:id"} exact element={<MovieDetails />} />
-                            <Route path={process.env.PUBLIC_URL + "/register"} exact element={<Register />} />
-                            <Route path={process.env.PUBLIC_URL + "/login"} exact element={<Login />} />
-                            <Route path="*" element={<Navigate to="/" />} />
-                        </Routes>
+        <movieContext.Provider value={{ isLoggedIn, setIsLoggedIn, userId }}>
+            <Provider template={AlertTemplate} {...options}>
+                <Router>
+                    <div className="App">
+                        <Header />
+                        <div className='body-container'>
+                            <Routes>
+                                <Route path={process.env.PUBLIC_URL + "/"} exact element={<Home />} />
+                                <Route path={process.env.PUBLIC_URL + "/listing"} exact element={<Listing />} />
+                                <Route path={process.env.PUBLIC_URL + "/movie-details/:id"} exact element={<MovieDetails />} />
+                                <Route path={process.env.PUBLIC_URL + "/register"} exact element={<Register />} />
+                                <Route path={process.env.PUBLIC_URL + "/login"} exact element={<Login />} />
+                                <Route path={process.env.PUBLIC_URL + "/dashboard"} exact element={<Dashboard />} />
+                                <Route path="*" element={<Navigate to="/" />} />
+                            </Routes>
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
-                </div>
-            </Router>
+                </Router>
+            </Provider>
         </movieContext.Provider>
     );
 }

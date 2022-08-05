@@ -13,7 +13,7 @@ function ProductsGrid(props) {
                         <Col key={movie.id} md={3} sm={6} xs={12} className='mt-3'>
                             <MovieCard
                                 id={movie.id}
-                                image={movie.image}
+                                image={movie.smallPoster}
                                 title={movie.title}
                             />
                         </Col>

@@ -1,31 +1,59 @@
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { useAlert } from "react-alert";
+
+import movieContext from '../context/movieContext';
 
 function Login() {
-    const navigate = useNavigate()
+    const navigate = useNavigate(),
+        { setIsLoggedIn } = useContext(movieContext),
+        alert = useAlert(),
+        [email, setEmail] = useState(""),
+        [password, setPassword] = useState(""),
+        loginClickHandler = _ => {
+            fetch(`http://localhost:5000/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            })
+                .then((res) => {
+                    return res.json()
+                })
+                .then(json => {
+                    setIsLoggedIn(true)
+                    alert.success(json.message)
+                    sessionStorage.setItem('id', json.body[0])
+                    navigate(process.env.PUBLIC_URL + '/')
+                })
+                .catch((err) => {
+                    console.log(`Error ${err}`);
+                })
+        }
     return (
         <div className="Login auth-form-container">
             <Container className="border bg-light p-3">
-                <Form>
-                    <Row>
-                        <Col md={12}>
-                            <h2 className="mb-4">Login</h2>
-                        </Col>
-                        <Col md={12}>
-                            <Form.Group className="mb-3" controlId="email">
-                                <Form.Control type="email" placeholder="Email" />
-                            </Form.Group>
-                        </Col>
-                        <Col md={12}>
-                            <Form.Group className="mb-3" controlId="password">
-                                <Form.Control type="password" placeholder="Password" />
-                            </Form.Group>
-                        </Col>
-                        <Col md={12}>
-                            <Button type="submit" onClick={() => { navigate('/') }}>Submit</Button>
-                        </Col>
-                    </Row>
-                </Form>
+                <Row>
+                    <Col md={12}>
+                        <h2 className="mb-4">Login</h2>
+                    </Col>
+                    <Col md={12}>
+                        <Form.Group className="mb-3" controlId="email">
+                            <Form.Control type="email" placeholder="Email" onChange={event => setEmail(event.target.value)} value={email} />
+                        </Form.Group>
+                    </Col>
+                    <Col md={12}>
+                        <Form.Group className="mb-3" controlId="password">
+                            <Form.Control type="password" placeholder="Password" onChange={event => setPassword(event.target.value)} value={password} />
+                        </Form.Group>
+                    </Col>
+                    <Col md={12}>
+                        <Button type="submit" onClick={loginClickHandler}>Submit</Button>
+                    </Col>
+                </Row>
             </Container>
         </div>
     );

@@ -16,11 +16,11 @@ function ControlledCarousel(props) {
                 props.movies && props.movies.length > 0
                     ?
                     props.movies.map(movie => (
-                        <Carousel.Item style={{height: '500px', cursor: 'pointer'}} key={movie.id} onClick={() => { navigate('/movie-details/' + movie.id) }}>
+                        <Carousel.Item style={{ height: '500px', cursor: 'pointer' }} key={movie.id} onClick={() => { navigate(process.env.PUBLIC_URL + '/movie-details/' + movie.id) }}>
                             <img
                                 className="d-block w-100"
-                                src={movie.image}
-                                alt="First slide"
+                                src={movie.largePoster}
+                                alt="slide"
                             />
                             <Carousel.Caption>
                                 <h3>{movie.title}</h3>

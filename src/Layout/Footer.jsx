@@ -1,3 +1,4 @@
+import React from 'react'
 import { Container } from "react-bootstrap";
 
 function FooterI() {
@@ -65,7 +66,7 @@ function FooterI() {
                         </div>
                     </section>
                 </Container>
-                <div className="text-center p-3">&#169; 2020 Copyright, OTT</div>
+                <div className="text-center p-3">&#169; 2022 Copyright, OTT</div>
             </footer>
         </div>
     );

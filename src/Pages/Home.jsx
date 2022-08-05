@@ -1,22 +1,62 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { useAlert } from "react-alert";
 
 import Carousel from '../Components/Carousel';
 import ProductsGrid from '../Components/ProductsGrid';
-import movieContext from '../context/movieContext';
 
 function Home() {
-    const { movies } = useContext(movieContext);
+    const alert = useAlert(),
+        [inDemandItems, setInDemandItems] = useState([]),
+        [featuredMovies, setInFeaturedMovies] = useState([]),
+        [feeaturedShows, setInFeaturedShows] = useState([])
+
+    useEffect(() => {
+        fetch("http://localhost:5000/inDemand")
+            .then((res) => {
+                return res.json()
+            })
+            .then(json => {
+                setInDemandItems(json.body);
+            })
+            .catch((err) => {
+                console.log(`Error ${err}`);
+                alert.error("Uh oh! Something went wrong.")
+            })
+        fetch("http://localhost:5000/featured?type=movie")
+            .then((res) => {
+                return res.json()
+            })
+            .then(json => {
+                setInFeaturedMovies(json.body);
+            })
+            .catch((err) => {
+                console.log(`Error ${err}`);
+                alert.error("Uh oh! Something went wrong.")
+            })
+        fetch("http://localhost:5000/featured?type=show")
+            .then((res) => {
+                return res.json()
+            })
+            .then(json => {
+                setInFeaturedShows(json.body);
+            })
+            .catch((err) => {
+                console.log(`Error ${err}`);
+                alert.error("Uh oh! Something went wrong.")
+            })
+    }, [])
+
     return (
         <div className="Home">
-            <Carousel movies={movies.filter(movie => movie.inDeemand)}/>
+            <Carousel movies={inDemandItems} />
             <Container fluid='md' className='mt-5'>
                 <h4 className='text-left'>Featured Movies</h4>
-                <ProductsGrid movies={movies.filter(movie => movie.isFeatured && movie.isMovie)} />
+                <ProductsGrid movies={featuredMovies} />
             </Container>
             <Container fluid='md' className='mt-5'>
                 <h4 className='text-left'>Featured Shows</h4>
-                <ProductsGrid movies={movies.filter(movie => movie.isFeatured && movie.isShow)} />
+                <ProductsGrid movies={feeaturedShows} />
             </Container>
             <Container fluid='md' className='my-5'>
                 <div className='homepage-banner-container'>
