@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
-import movieContext from '../context/movieContext';
+import ottContext from '../context/ottContext';
 
 function Header() {
     const location = useLocation(),
         navigate = useNavigate(),
-        { isLoggedIn, setIsLoggedIn } = useContext(movieContext),
+        { isLoggedIn, setIsLoggedIn } = useContext(ottContext),
         logoutClickHandler = _ => {
             setIsLoggedIn(false)
             sessionStorage.removeItem('id')

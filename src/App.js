@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-import movieContext from "./context/movieContext";
+import ottContext from "./context/ottContext";
 import Header from './Layout/Header'
 import Footer from './Layout/Footer'
 import Home from './Pages/Home'
@@ -17,19 +17,17 @@ import './App.css';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false),
-        [userId, setUserId] = useState(""),
         options = {
             timeout: 5000,
             position: positions.TOP_RIGHT
         }
     useEffect(_ => {
         if (sessionStorage.getItem('id')) {
-            setUserId(sessionStorage.getItem('id'))
             setIsLoggedIn(true)
         }
     }, [])
     return (
-        <movieContext.Provider value={{ isLoggedIn, setIsLoggedIn, userId }}>
+        <ottContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
             <Provider template={AlertTemplate} {...options}>
                 <Router>
                     <div className="App">
@@ -49,7 +47,7 @@ function App() {
                     </div>
                 </Router>
             </Provider>
-        </movieContext.Provider>
+        </ottContext.Provider>
     );
 }
 

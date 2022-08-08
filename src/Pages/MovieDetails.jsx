@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { Row, Col, Container, Badge } from "react-bootstrap";
+import { Row, Col, Container, Badge, Button } from "react-bootstrap";
+
+import { API_URL } from '../config.json'
 
 function MovieDetails() {
     const alert = useAlert(),
@@ -19,7 +21,7 @@ function MovieDetails() {
             inDemand: false
         })
     useEffect(() => {
-        fetch(`http://localhost:5000/movies/${id}`)
+        fetch(`${API_URL}/movies/${id}`)
             .then((res) => {
                 return res.json()
             })
@@ -44,13 +46,25 @@ function MovieDetails() {
                                     <img className="movie-details-image" src={movie.largePoster} alt={movie.title} />
                                 </div>
                             </Col>
-                            <Col md={12} sm={12}>
-                                <div className="text-left">
-                                    <h1>{movie.title}</h1>
-                                    <p>{movie.details}</p>
-                                    <h5>Price: ${movie.unitPrice}</h5>
-                                    {movie.inDeemand ? <Badge bg='danger'>Trending</Badge> : null}
-                                </div>
+                            <Col sm={12}>
+                                <Container className="my-3">
+                                    <Row>
+                                        <Col md={4} sm={12}>
+                                            <div className="movie-details-small-poster">
+                                                <img src={movie.smallPoster} alt={movie.title} />
+                                            </div>
+                                        </Col>
+                                        <Col md={8} sm={12}>
+                                            <div className="text-left">
+                                                <h1>{movie.title}</h1>
+                                                <p>{movie.details}</p>
+                                                <Button className="m-2" variant="dark">Buy ${movie.unitPrice}</Button>
+                                                <Button className="m-2" variant="dark">Rent ${movie.costPrice}</Button>
+                                                {movie.inDeemand ? <Badge bg='danger'>Trending</Badge> : null}
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Container>
                             </Col>
                         </Row>
                         :

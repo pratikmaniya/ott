@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useAlert } from "react-alert";
 
-import movieContext from '../context/movieContext';
+import ottContext from '../context/ottContext';
+import { API_URL } from '../config.json'
 
 function Login() {
     const navigate = useNavigate(),
-        { setIsLoggedIn } = useContext(movieContext),
+        { setIsLoggedIn } = useContext(ottContext),
         alert = useAlert(),
         [email, setEmail] = useState(""),
         [password, setPassword] = useState(""),
         loginClickHandler = _ => {
-            fetch(`http://localhost:5000/login`, {
+            fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -51,7 +52,7 @@ function Login() {
                         </Form.Group>
                     </Col>
                     <Col md={12}>
-                        <Button type="submit" onClick={loginClickHandler}>Submit</Button>
+                        <Button variant='dark' type="submit" onClick={loginClickHandler}>Submit</Button>
                     </Col>
                 </Row>
             </Container>

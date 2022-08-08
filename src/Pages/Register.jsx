@@ -3,6 +3,8 @@ import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { useAlert } from "react-alert";
 
+import { API_URL } from '../config.json'
+
 function Register() {
     const navigate = useNavigate(),
         alert = useAlert(),
@@ -13,7 +15,7 @@ function Register() {
         [confirmPassword, setConfirmPassword] = useState(""),
         registerClickHandler = _ => {
             if (password === confirmPassword) {
-                fetch(`http://localhost:5000/register`, {
+                fetch(`${API_URL}/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -71,7 +73,7 @@ function Register() {
                         </Form.Group>
                     </Col>
                     <Col md={12}>
-                        <Button type="submit" onClick={registerClickHandler}>Submit</Button>
+                        <Button type="submit" variant="dark" onClick={registerClickHandler}>Submit</Button>
                     </Col>
                 </Row>
             </Container>

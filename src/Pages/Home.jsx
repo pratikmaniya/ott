@@ -4,6 +4,7 @@ import { useAlert } from "react-alert";
 
 import Carousel from '../Components/Carousel';
 import ProductsGrid from '../Components/ProductsGrid';
+import { API_URL } from '../config.json'
 
 function Home() {
     const alert = useAlert(),
@@ -12,7 +13,7 @@ function Home() {
         [feeaturedShows, setInFeaturedShows] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:5000/inDemand")
+        fetch(`${API_URL}/inDemand`)
             .then((res) => {
                 return res.json()
             })
@@ -23,7 +24,7 @@ function Home() {
                 console.log(`Error ${err}`);
                 alert.error("Uh oh! Something went wrong.")
             })
-        fetch("http://localhost:5000/featured?type=movie")
+        fetch(`${API_URL}/featured?type=movie`)
             .then((res) => {
                 return res.json()
             })
@@ -34,7 +35,7 @@ function Home() {
                 console.log(`Error ${err}`);
                 alert.error("Uh oh! Something went wrong.")
             })
-        fetch("http://localhost:5000/featured?type=show")
+        fetch(`${API_URL}/featured?type=show`)
             .then((res) => {
                 return res.json()
             })

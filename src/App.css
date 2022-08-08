@@ -54,6 +54,10 @@ html, body, #root, .App {
   max-height: 600px;
 }
 
+.movie-details-small-poster>img{
+  width: 100%;
+}
+
 .auth-form-container {
   max-width: 600px;
   margin: 20px auto 213px;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Container, Row, Tab, Nav } from 'react-bootstrap'
+import { Col, Container, Row, Tab, Nav, Button } from 'react-bootstrap'
 import { useAlert } from "react-alert";
 
 import MovieCard from '../Components/MovieCard'
+import {API_URL} from '../config.json'
 
 function Listing() {
     const alert = useAlert(),
@@ -11,7 +12,7 @@ function Listing() {
         [shows, setShows] = useState([]),
         [searchInput, setSearchInput] = useState("")
     useEffect(() => {
-        fetch("http://localhost:5000/movies")
+        fetch(`${API_URL}/movies`)
             .then((res) => {
                 return res.json()
             })
@@ -22,7 +23,7 @@ function Listing() {
                 console.log(`Error ${err}`);
                 alert.error("Uh oh! Something went wrong.")
             })
-        fetch("http://localhost:5000/shows")
+        fetch(`${API_URL}/shows`)
             .then((res) => {
                 return res.json()
             })
@@ -35,7 +36,7 @@ function Listing() {
             })
     }, [])
     const searchMovieHandler = _ => {
-        fetch(`http://localhost:5000/search?query=${searchInput}&type=movie`)
+        fetch(`${API_URL}/search?query=${searchInput}&type=movie`)
             .then((res) => {
                 return res.json()
             })
@@ -48,7 +49,7 @@ function Listing() {
             })
     }
     const searchShowHandler = _ => {
-        fetch(`http://localhost:5000/search?query=${searchInput}&type=show`)
+        fetch(`${API_URL}/search?query=${searchInput}&type=show`)
             .then((res) => {
                 return res.json()
             })
@@ -84,9 +85,9 @@ function Listing() {
                                         <div className="form-outline">
                                             <input type="search" className="form-control" placeholder='Search' onChange={event => setSearchInput(event.target.value)} value={searchInput} />
                                         </div>
-                                        <button type="button" className="btn btn-dark" onClick={_ => searchMovieHandler()}>
+                                        <Button variant='dark' onClick={_ => searchMovieHandler()}>
                                             <i className="fa fa-search"></i>
-                                        </button>
+                                        </Button>
                                     </div>
                                 </Col>
                             </Row>
@@ -117,9 +118,9 @@ function Listing() {
                                         <div className="form-outline">
                                             <input type="search" className="form-control" placeholder='Search' onChange={event => setSearchInput(event.target.value)} value={searchInput} />
                                         </div>
-                                        <button type="button" className="btn btn-dark" onClick={_ => searchShowHandler()}>
+                                        <Button variant='dark' onClick={_ => searchShowHandler()}>
                                             <i className="fa fa-search"></i>
-                                        </button>
+                                        </Button>
                                     </div>
                                 </Col>
                             </Row>
